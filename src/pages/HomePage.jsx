@@ -1,28 +1,26 @@
 import { useState,useEffect } from 'react'
 import Image from '../components/Image'
-import axios from "axios"
 import { Link } from 'react-router'
+import { modelGetAll,modelDeleteByID } from '../model/modelTodoList'
 
 function App() {
   const [dataList, setDataList] = useState([])
-  const [count, setCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  // const REACT_APP_API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL
-  // console.log(import.meta.env)
+
   const fetchDataList = async() => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/v1/products`)
-      setDataList(res.data)
+      const data = await modelGetAll()
+      setDataList(data)
       setIsLoading(false)
     } catch (error) {
-      console.log('error',error)
+      console.log(error)
     }
   }
 
   async function deleteData(id) {
     try {
       setIsLoading(true)
-      const res = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/api/v1/products/${id}`)
+      await modelDeleteByID(id);
       await fetchDataList()
     } catch (error) {
       console.log('error',error)
@@ -34,18 +32,11 @@ function App() {
     fetchDataList()
   },[])
 
-  function addCount(){
-    setCount(count+1)
-  }
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-red-700 underline">
-        Hello world!, Now count is {count}
-      </h1>
-      <button onClick={addCount} className='p-3 m-1 bg-blue-400 rounded-md'>count +1</button>
+      <div className='text-left'><h1 className='text-6xl drop-shadow-2xl'>To do list</h1></div>
       <div>
-        <Image imageUrl='https://fastly.picsum.photos/id/3/200/200.jpg?hmac=N5yYUNYl5gOUcaMmTtnNNtx839TN2qaNM4SaXhQl65U' />
         <div className='grid grid-cols-4 gap-3 my-3'>
           {
             dataList.map((r,i)=>{

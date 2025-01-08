@@ -2,7 +2,7 @@ import { useParams,useNavigate } from "react-router"
 import { Link } from "react-router"
 import { useState,useEffect } from "react"
 import axios from "axios"
-import { func } from "prop-types"
+import FormTodoList from "../components/FormTodoList"
 
 export default function EditTodoList() {
     let navigate = useNavigate();
@@ -37,21 +37,14 @@ export default function EditTodoList() {
         }))
     }
 
-    function handelFormChangeLong(e){
-        setTodo((previousState)=>{
-            let r = {...previousState}
-            // console.log({[e.target.name]:e.target.value})
-            r[e.target.name] = e.target.value
-            return r;
-        })
-    }
-
     function handelFormChange(e){
         setTodo((previousState)=>({
             ...previousState,
             [e.target.name]:e.target.value
         }))
     }
+
+    
 
     async function updateTodo(todoId){
         try {
@@ -74,11 +67,7 @@ export default function EditTodoList() {
     return (
         <div className="p-1">
             <div>edit todo list page id : {id}</div>
-            <div>Title: <input className="border-gray-500 border rounded-md px-1" name="title" type="text" value={todo.title} onChange={handelFormChange} /></div>
-            <div>
-                <div>Description:</div>
-                <textarea className="border-gray-500 border rounded-md px-1" name="description" rows="4" cols="50" value={todo.description} onChange={handelFormChange}></textarea> 
-            </div>
+            <FormTodoList {...todo} handelFormChange={handelFormChange} />
             <div>
                 <Link to={`/`}>
                     <button className="bg-blue-700 text-yellow-50 rounded-md px-3 py-1">Back to home</button>
