@@ -21,9 +21,12 @@ export const modelGetOnceByID = async (id) => {
     }
 }
 
-export const modelUpdateByID = async (id) => {
+export const modelUpdateByID = async (todo) => {
     try {
-        const res = await axios.get(`${API_BASE_URL}/api/v1/products/${id}`)
+        const res = await axios.put(`${API_BASE_URL}/api/v1/products/${todo.id}`,{
+            title: todo.title,
+            description: todo.description,
+        })
         return res.data;
     } catch (error) {
         console.error('Error update data:', error);
