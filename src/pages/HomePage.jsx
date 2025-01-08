@@ -1,11 +1,12 @@
 import { useState,useEffect } from 'react'
-import Image from '../components/Image'
 import { Link } from 'react-router'
 import { modelGetAll,modelDeleteByID } from '../model/modelTodoList'
+import ModalEx from '../components/ModalEx'
 
 function App() {
   const [dataList, setDataList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const fetchDataList = async() => {
     try {
@@ -26,6 +27,10 @@ function App() {
       console.log('error',error)
     }
   }
+
+  async function showModal() {
+    setIsModalOpen(true)
+  }
   
  
   useEffect(()=>{
@@ -35,7 +40,11 @@ function App() {
 
   return (
     <>
-      <div className='text-left'><h1 className='text-6xl drop-shadow-2xl'>To do list</h1></div>
+      <div className='flex'>
+        <h1 className='text-6xl drop-shadow-2xl'>To do list</h1>
+        <button onClick={showModal} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-500'>Create</button>
+        <ModalEx isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+        </div>
       <div>
         <div className='grid grid-cols-4 gap-3 my-3'>
           {
