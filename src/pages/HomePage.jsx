@@ -1,7 +1,8 @@
 import { useState,useEffect } from 'react'
 import { Link } from 'react-router'
 import { modelGetAll,modelDeleteByID } from '../model/modelTodoList'
-import ModalEx from '../components/ModalEx'
+import ModalCreateTodoList from '../components/ModalCreateTodoList'
+import { modelInsert } from '../model/modelTodoList'
 
 function App() {
   const [dataList, setDataList] = useState([])
@@ -28,8 +29,15 @@ function App() {
     }
   }
 
-  async function showModal() {
-    setIsModalOpen(true)
+  async function modalSubmit(todo) {
+    try {
+      setIsLoading(true)
+      const res = await modelInsert(todo);
+      fetchDataList()
+      setIsModalOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
   
  
@@ -42,8 +50,8 @@ function App() {
     <>
       <div className='flex'>
         <h1 className='text-6xl drop-shadow-2xl'>To do list</h1>
-        <button onClick={showModal} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-500'>Create</button>
-        <ModalEx isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+        <button onClick={()=>{setIsModalOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>Create</button>
+        <ModalCreateTodoList isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} modalSubmit={modalSubmit} isLoading={isLoading}/>
         </div>
       <div>
         <div className='grid grid-cols-4 gap-3 my-3'>

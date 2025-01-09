@@ -35,6 +35,22 @@ export const modelUpdateByID = async (todo) => {
 }
 
 
+export const modelInsert = async (todo) => {
+    try {
+        const res = await axios.post(`${API_BASE_URL}/api/v1/products`,{
+            title: todo.title,
+            description: todo.description,
+            image:'https://loremflickr.com/640/480/fashion',
+            create: "2079-07-16T09:42:24.741Z"
+        })
+        return res.data;
+    } catch (error) {
+        console.error('Error Insert data:', error);
+        throw error;
+    }
+}
+
+
 export const modelDeleteByID = async (id) => {
     try {
         const res = await axios.delete(`${API_BASE_URL}/api/v1/products/${id}`)
