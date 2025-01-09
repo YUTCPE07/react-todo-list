@@ -7,6 +7,7 @@ import { modelGetOnceByID,modelUpdateByID } from '../model/modelTodoList'
 export default function EditTodoList() {
     let navigate = useNavigate();
     const {id} = useParams()
+    const [isLoading, setIsLoading] = useState(true)
     const [todo, setTodo] = useState({
         title:'',
         description:'',
@@ -16,6 +17,7 @@ export default function EditTodoList() {
         try {
             const data = await modelGetOnceByID(toDoId)
             setTodo(data)
+            setIsLoading(false)
         } catch (error) {
           console.log('error',error)
         }
@@ -60,7 +62,7 @@ export default function EditTodoList() {
     return (
         <div className="p-1">
             <div>edit todo list page id : {id}</div>
-            <FormTodoList {...todo} handelFormChange={handelFormChange} />
+            <FormTodoList {...todo} handelFormChange={handelFormChange} isLoading={isLoading} />
             <div>
                 <Link to={`/`}>
                     <button className="bg-blue-700 text-yellow-50 rounded-md px-3 py-1">Back to home</button>
