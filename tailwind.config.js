@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'ct-pink': {
+          light: '#FFCCE1',
+          DEFAULT: '#E195AB',
+          dark: '#E195AB',
+        },
+      }
+    },
   },
   plugins: [],
 }
