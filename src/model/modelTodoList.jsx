@@ -40,8 +40,6 @@ export const modelInsert = async (todo) => {
         const res = await axios.post(`${API_BASE_URL}/api/v1/products`,{
             title: todo.title,
             description: todo.description,
-            image:'https://loremflickr.com/640/480/fashion',
-            create: "2079-07-16T09:42:24.741Z"
         })
         return res.data;
     } catch (error) {
