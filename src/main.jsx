@@ -1,12 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router";
-import '/src/index.css'
+import './index.css'
+import './library/fontawsomeLibrary.js'
 import HomePage from './pages/HomePage.jsx'
 import EditTodoListPage from './pages/EditTodoListPage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
-import AboutPage from './pages/AboutPage.jsx';
+import AboutPage from './pages/AboutPage.jsx'
 
 
 createRoot(document.getElementById('root')).render(

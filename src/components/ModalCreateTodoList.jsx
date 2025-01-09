@@ -1,7 +1,7 @@
 import React from 'react'
 import FormTodoList from './FormTodoList'
 import { useState,useEffect } from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default function ModalCreateTodoList({isModalOpen,setIsModalOpen,modalSubmit,isLoading}) {
     const [todo, setTodo] = useState({
         title:'',
@@ -32,7 +32,7 @@ export default function ModalCreateTodoList({isModalOpen,setIsModalOpen,modalSub
                                 className="
                                     inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto
                                     disabled:bg-green-400
-                                    ">{isLoading && (<i className="fa-solid fa-circle-notch fa-spin mr-1 mt-0.5"></i>)} Save</button>
+                                    ">{!isLoading && (<FontAwesomeIcon icon="fa-solid fa-circle-notch" />)} Save</button>
                             {
                                 !isLoading && (
                                     <button onClick={()=>{setIsModalOpen(false)}} type="button" 
