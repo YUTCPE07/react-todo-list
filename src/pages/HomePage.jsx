@@ -76,27 +76,39 @@ function App() {
           {
             dataList.map((r,i)=>{
               return (
-                <div key={i} className='p-2 bg-yellow-100 rounded-md grid grid-flow-row'>
+                <div key={i} className='p-2 bg-yellow-100 rounded-md grid grid-flow-row shadow
+                   hover:shadow-pink-500
+                  '>
                   <div className='mb-2'>
-                    <div className='font-bold text-lg'>{r.id}:{r.title}</div>
-                    <div className='font-light text-sm line-clamp-3'>{r.description}</div>
+                    <Link to={`/todo/detail/${r.id}`}>
+                      <div className='font-bold text-lg'>{r.id}:{r.title}</div>
+                      <div className='font-light text-sm line-clamp-3'>{r.description}</div>
+                    </Link>
                   </div>
-                  <div className='flex justify-end mt-auto'>
-                    <div className='inline text-xs'>
+                  <div className='flex justify-between mt-auto text-xs'>
+                    <div className='inline'>
+                      <button onClick={async()=>{
+                        await deleteData(r.id)
+                      }} className={(isLoading)?'bg-red-200 text-gray-500 rounded-md py-1 px-3 mt-auto':'bg-red-500 text-gray-50 rounded-md py-1 px-3 mt-auto shadow'}
+                        disabled={isLoading}
+                      >
+                        <FontAwesomeIcon icon="fa-regular fa-trash-can" /> Delete
+                      </button>
                       <Link to={`/todo/edit/${r.id}`}>
-                        <button className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto mr-2'>
+                        <button className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto ml-2 shadow'>
                           <FontAwesomeIcon icon="fa-solid fa-pen-to-square"/> Edit
                         </button>
                       </Link>
                       
-
-                      <button onClick={async()=>{
-                        await deleteData(r.id)
-                      }} className={(isLoading)?'bg-red-200 text-gray-500 rounded-md py-1 px-3 mt-auto':'bg-red-500 text-gray-50 rounded-md py-1 px-3 mt-auto'}
-                      disabled={isLoading}
-                      >
-                        <FontAwesomeIcon icon="fa-regular fa-trash-can" /> Delete
-                      </button>
+                    </div>
+                    <div>
+                      <Link to={`/todo/detail/${r.id}`}>
+                        <button className='shadow bg-yellow-50 rounded-md py-1 px-3 mt-auto ml-2
+                          hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-yellow-50
+                          '>
+                        <FontAwesomeIcon icon="fa-regular fa-eye" /> Show more
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -8,6 +8,7 @@ import EditTodoListPage from './pages/EditTodoListPage.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import AboutPage from './pages/AboutPage.jsx'
+import TodoDetailPage from './pages/TodoDetailPage.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')).render(
           <Route index element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/todo/edit/:id" element={<EditTodoListPage />} />
+          <Route path="/todo/detail/:id" element={<TodoDetailPage />} />
         </Routes>
       </div>
       <Footer />

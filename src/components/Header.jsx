@@ -1,7 +1,11 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router"
+import { useLocation } from 'react-router'
 
 export default function Header(){
-
+    const location = useLocation()
+    const pathname = location.pathname
+    const isTodoDetailActive = pathname.startsWith('/todo/detail/');
+    // console.log(pathname,isTodoDetailActive)
     const classActive = (isActive) => {
         let c = "px-3 py-1 rounded-t-md";
         if(isActive){
@@ -25,6 +29,16 @@ export default function Header(){
                     >
                     About
                 </NavLink>
+                {
+                    isTodoDetailActive && (
+                        <NavLink
+                            to="/about"
+                            className={(classActive(isTodoDetailActive))}
+                            >
+                            To do detail
+                        </NavLink>
+                    )
+                }
             </div>
         </nav>
     )
