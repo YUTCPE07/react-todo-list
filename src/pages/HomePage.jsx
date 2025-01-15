@@ -67,9 +67,9 @@ function App() {
         <button onClick={()=>{setIsModalOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>
           <FontAwesomeIcon icon="fa-solid fa-plus" /> Create
         </button>
-        <ModalFromTodoList isModalOpen={isModalOpen} 
-          todo={todo} setTodo={setTodo}
-          resetTodo={resetTodo}
+        <ModalFromTodoList 
+          isModalOpen={isModalOpen} textHeader={'Create todo list'}
+          todo={todo} setTodo={setTodo} resetTodo={resetTodo}
           setIsModalOpen={setIsModalOpen} modalSubmit={modalSubmit} isLoading={isLoading}/>
         </div>
       <div>
