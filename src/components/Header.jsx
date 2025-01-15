@@ -5,11 +5,17 @@ export default function Header(){
     const location = useLocation()
     const pathname = location.pathname
     const isTodoDetailActive = pathname.startsWith('/todo/detail/');
+    const isAboutClass = (location.pathname==='/about')?'bg-color-1':'';
     // console.log(pathname,isTodoDetailActive)
     const classActive = (isActive) => {
         let c = "px-3 py-1 rounded-t-md";
+        
         if(isActive){
-            c = c + " bg-white text-gray-500"
+            if(isAboutClass){
+                c = c + " bg-color-1 text-gray-700"
+            }else{
+                c = c + " bg-white text-gray-500"
+            }
         }
         return c
     }
