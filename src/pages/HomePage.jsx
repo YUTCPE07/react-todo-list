@@ -1,15 +1,17 @@
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useCallback } from 'react'
 import { Link } from 'react-router'
-import { modelGetAll,modelDeleteByID } from '../model/modelTodoList'
+import { modelGetAll, modelUpdateByID ,modelDeleteByID } from '../model/modelTodoList'
 import ModalFromTodoList from '../components/ModalFormTodoList'
 import { modelInsert } from '../model/modelTodoList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Loading from '../components/Loading'
+import { func } from 'prop-types'
 
 function App() {
   const [dataList, setDataList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [todo, setTodo] = useState({
       title:'',
       description:'',
@@ -53,6 +55,26 @@ function App() {
       console.log(error)
     }
   }
+
+  async function modalSubmitEdit(todo) {
+    try {
+      setIsLoading(true)
+      const res = await modelUpdateByID(todo);
+      setIsModalEditOpen(false)
+      resetTodo()
+      setIsLoading(false)
+      setTimeout(()=>{
+        alert("success")
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  function clickEditTodo(todo){
+    setTodo(todo)
+    setIsModalEditOpen(true)
+  }
   
  
   useEffect(()=>{
@@ -71,6 +93,11 @@ function App() {
           isModalOpen={isModalCreateOpen} textHeader={'Create todo list'}
           todo={todo} setTodo={setTodo} resetTodo={resetTodo}
           setIsModalOpen={setIsModalCreateOpen} modalSubmit={modalSubmitCreate} isLoading={isLoading}/>
+
+        <ModalFromTodoList 
+          isModalOpen={isModalEditOpen} textHeader={'Edit todo list'}
+          todo={todo} setTodo={setTodo} resetTodo={resetTodo}
+          setIsModalOpen={setIsModalEditOpen} modalSubmit={modalSubmitEdit} isLoading={isLoading}/>
         </div>
       <div>
         {
@@ -98,12 +125,9 @@ function App() {
                           >
                             <FontAwesomeIcon icon="fa-regular fa-trash-can" /> Delete
                           </button>
-                          <Link to={`/todo/edit/${r.id}`}>
-                            <button className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto ml-2 shadow'>
-                              <FontAwesomeIcon icon="fa-solid fa-pen-to-square"/> Edit
-                            </button>
-                          </Link>
-                          
+                          <button onClick={()=>{clickEditTodo(r)}} className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto ml-2 shadow'>
+                            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+                          </button>
                         </div>
                         <div>
                           <Link to={`/todo/detail/${r.id}`}>
