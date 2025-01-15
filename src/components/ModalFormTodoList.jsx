@@ -2,7 +2,7 @@ import React from 'react'
 import FormTodoList from './FormTodoList'
 import { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-export default function ModalFormTodoList({isModalOpen,setIsModalOpen,todo,setTodo,resetTodo,modalSubmit,isLoading}) {
+export default function ModalFormTodoList({isModalOpen,textHeader,setIsModalOpen,todo,setTodo,resetTodo,modalSubmit,isLoading}) {
     
     function handelFormChange(e){
         setTodo((previousState)=>({
@@ -19,9 +19,10 @@ export default function ModalFormTodoList({isModalOpen,setIsModalOpen,todo,setTo
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                            <FormTodoList {...todo} handelFormChange={handelFormChange} isLoading={isLoading} />
-                        </div>
+                            <div className='text-3xl font-medium mb-4'>{textHeader}</div>
+                            <div className="sm:flex sm:items-start">
+                                <FormTodoList {...todo} handelFormChange={handelFormChange} isLoading={isLoading} />
+                            </div>
                         </div>
                         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                             <button onClick={()=>{

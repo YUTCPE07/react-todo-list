@@ -1,15 +1,17 @@
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useCallback } from 'react'
 import { Link } from 'react-router'
-import { modelGetAll,modelDeleteByID } from '../model/modelTodoList'
+import { modelGetAll, modelUpdateByID ,modelDeleteByID } from '../model/modelTodoList'
 import ModalFromTodoList from '../components/ModalFormTodoList'
 import { modelInsert } from '../model/modelTodoList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Loading from '../components/Loading'
+import { func } from 'prop-types'
 
 function App() {
   const [dataList, setDataList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [todo, setTodo] = useState({
       title:'',
       description:'',
@@ -42,16 +44,36 @@ function App() {
   }
   
 
-  async function modalSubmit(todo) {
+  async function modalSubmitCreate(todo) {
     try {
       setIsLoading(true)
       const res = await modelInsert(todo);
       fetchDataList()
-      setIsModalOpen(false)
+      setIsModalCreateOpen(false)
       resetTodo()
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async function modalSubmitEdit(todo) {
+    try {
+      setIsLoading(true)
+      const res = await modelUpdateByID(todo);
+      setIsModalEditOpen(false)
+      resetTodo()
+      setIsLoading(false)
+      setTimeout(()=>{
+        alert("success")
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  function clickEditTodo(todo){
+    setTodo(todo)
+    setIsModalEditOpen(true)
   }
   
  
@@ -64,13 +86,18 @@ function App() {
     <>
       <div className='flex'>
         <h1 className='text-6xl drop-shadow-2xl'>To do list</h1>
-        <button onClick={()=>{setIsModalOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>
+        <button onClick={()=>{setIsModalCreateOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>
           <FontAwesomeIcon icon="fa-solid fa-plus" /> Create
         </button>
-        <ModalFromTodoList isModalOpen={isModalOpen} 
-          todo={todo} setTodo={setTodo}
-          resetTodo={resetTodo}
-          setIsModalOpen={setIsModalOpen} modalSubmit={modalSubmit} isLoading={isLoading}/>
+        <ModalFromTodoList 
+          isModalOpen={isModalCreateOpen} textHeader={'Create todo list'}
+          todo={todo} setTodo={setTodo} resetTodo={resetTodo}
+          setIsModalOpen={setIsModalCreateOpen} modalSubmit={modalSubmitCreate} isLoading={isLoading}/>
+
+        <ModalFromTodoList 
+          isModalOpen={isModalEditOpen} textHeader={'Edit todo list'}
+          todo={todo} setTodo={setTodo} resetTodo={resetTodo}
+          setIsModalOpen={setIsModalEditOpen} modalSubmit={modalSubmitEdit} isLoading={isLoading}/>
         </div>
       <div>
         {
@@ -98,12 +125,9 @@ function App() {
                           >
                             <FontAwesomeIcon icon="fa-regular fa-trash-can" /> Delete
                           </button>
-                          <Link to={`/todo/edit/${r.id}`}>
-                            <button className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto ml-2 shadow'>
-                              <FontAwesomeIcon icon="fa-solid fa-pen-to-square"/> Edit
-                            </button>
-                          </Link>
-                          
+                          <button onClick={()=>{clickEditTodo(r)}} className='bg-blue-700 text-yellow-50 rounded-md py-1 px-3 mt-auto ml-2 shadow'>
+                            <FontAwesomeIcon icon="fa-solid fa-pen-to-square" /> Edit
+                          </button>
                         </div>
                         <div>
                           <Link to={`/todo/detail/${r.id}`}>
