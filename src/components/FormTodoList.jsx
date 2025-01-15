@@ -11,7 +11,7 @@ export default function FormTodoList({title, description, handelFormChange ,isLo
         <div>
             <div>Title: <input 
                 ref={inputRef}
-                className="border-gray-500 border rounded-md px-1
+                className="border-gray-500 border rounded-md px-1 w-full mb-3
                 :disabled:opacity-75 disabled:cursor-not-allowed
             " name="title" type="text" value={title} onChange={handelFormChange} disabled={isLoading} /></div>
             <div>
