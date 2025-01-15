@@ -9,7 +9,7 @@ import Loading from '../components/Loading'
 function App() {
   const [dataList, setDataList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
   const [todo, setTodo] = useState({
       title:'',
       description:'',
@@ -42,12 +42,12 @@ function App() {
   }
   
 
-  async function modalSubmit(todo) {
+  async function modalSubmitCreate(todo) {
     try {
       setIsLoading(true)
       const res = await modelInsert(todo);
       fetchDataList()
-      setIsModalOpen(false)
+      setIsModalCreateOpen(false)
       resetTodo()
     } catch (error) {
       console.log(error)
@@ -64,13 +64,13 @@ function App() {
     <>
       <div className='flex'>
         <h1 className='text-6xl drop-shadow-2xl'>To do list</h1>
-        <button onClick={()=>{setIsModalOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>
+        <button onClick={()=>{setIsModalCreateOpen(true)}} className='text-lg mt-auto px-3 py-1 ml-3 rounded-md shadow-md text-yellow-50 bg-green-600 hover:bg-green-500'>
           <FontAwesomeIcon icon="fa-solid fa-plus" /> Create
         </button>
         <ModalFromTodoList 
-          isModalOpen={isModalOpen} textHeader={'Create todo list'}
+          isModalOpen={isModalCreateOpen} textHeader={'Create todo list'}
           todo={todo} setTodo={setTodo} resetTodo={resetTodo}
-          setIsModalOpen={setIsModalOpen} modalSubmit={modalSubmit} isLoading={isLoading}/>
+          setIsModalOpen={setIsModalCreateOpen} modalSubmit={modalSubmitCreate} isLoading={isLoading}/>
         </div>
       <div>
         {
