@@ -6,7 +6,7 @@ export default function FormTodoList({title, description, handelFormChange ,isLo
     useEffect(()=>{
         const inputElement = inputRef.current;
         inputElement.focus();
-    })
+    },[])
     return (
         <div>
             <div>Title: <input 
