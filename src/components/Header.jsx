@@ -12,7 +12,7 @@ export default function Header(){
         
         if(isActive){
             if(isAboutClass){
-                c = c + " bg-color-1 text-gray-700"
+                c = c + " bg-color-1 text-indigo-500"
             }else{
                 c = c + " bg-white text-gray-500"
             }

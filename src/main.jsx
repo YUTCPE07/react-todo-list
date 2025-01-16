@@ -20,7 +20,7 @@ const AppLayout = () => {
     </div>
     <Footer />
   </>
-)};
+)}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -33,5 +33,5 @@ createRoot(document.getElementById('root')).render(
           </Route>
         </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )
