@@ -5,17 +5,25 @@ import ModalFromTodoList from '../components/ModalFormTodoList'
 import { modelInsert } from '../model/modelTodoList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Loading from '../components/Loading'
-import { func } from 'prop-types'
+import {verifySession} from '../library/session'
 
-function App() {
+
+export default function HomePage() {
   const [dataList, setDataList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [user, setUser] = useState(null)
   const [todo, setTodo] = useState({
       title:'',
       description:'',
   })
+
+  async function getUser() {
+    const user = await verifySession()
+    setUser(user)
+  }
+
   const fetchDataList = async() => {
     try {
       const data = await modelGetAll()
@@ -25,6 +33,7 @@ function App() {
       console.log(error)
     }
   }
+  
 
   async function resetTodo(){
     setTodo({
@@ -79,6 +88,7 @@ function App() {
  
   useEffect(()=>{
     fetchDataList()
+    getUser()
   },[])
 
 
@@ -151,5 +161,3 @@ function App() {
     </>
   )
 }
-
-export default App

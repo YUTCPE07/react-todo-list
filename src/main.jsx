@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
+import { useState,useEffect } from "react"
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route, Outlet, useLocation } from "react-router";
+import { BrowserRouter, Routes, Route, Outlet, useLocation, useNavigate } from "react-router";
 import './index.css'
 import './library/fontawsomeLibrary.js'
 import HomePage from './pages/HomePage.jsx'
@@ -8,10 +9,13 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import TodoDetailPage from './pages/TodoDetailPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+
 
 const AppLayout = () => {
   const location = useLocation();
   const isAboutClass = (location.pathname==='/about')?'bg-color-1':'';
+
   return (
   <>
     <Header />
@@ -30,6 +34,7 @@ createRoot(document.getElementById('root')).render(
             <Route index element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/todo/detail/:id" element={<TodoDetailPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Route>
         </Routes>
     </BrowserRouter>
